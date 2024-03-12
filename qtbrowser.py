@@ -124,9 +124,9 @@ class MainWindow(QMainWindow):
 	def navigate_to_url(self):
 
 		# getting url and converting it to QUrl object
-		q = QUrl(self.urlbar.text())
+		q = str(QUrl(self.urlbar.text()))
 		clientConn = clientEnd()
-		q = sendMsg(clientConn, q).decode(FORMAT)
+		q = QUrl(sendMsg(clientConn, q).decode(FORMAT))
 
 		# set the url to the browser
 		self.browser.setUrl(q)
