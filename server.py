@@ -25,11 +25,11 @@ def handle_client(conn, addr):
             print(f"[{addr}]: {msg}")
             # conn.send(f"Message received: {msg}".encode(FORMAT)   
             if msg in BLACKLIST:
-                conn.send(f'http://{SERVER}:5050/blacklisted.html'.encode(FORMAT))
+                conn.send(f'http://localhost:8000/blacklisted.html'.encode(FORMAT))
             elif msg == DISCONNECT_MESSAGE:
                 connected = False
             elif not checkHTTPOrS(msg):
-                conn.send(f"http://{SERVER}:5050/noHttps.html".encode(FORMAT))
+                conn.send(f"http://localhost:8000/noHttps.html".encode(FORMAT))
             else:
                 conn.send(msg.encode(FORMAT))
 
