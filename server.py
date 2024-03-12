@@ -1,6 +1,7 @@
 import socket
 import threading
 from trial import checkHTTPOrS
+from isBlack import isBlack
 
 HEADER = 64
 PORT = 5050
@@ -8,7 +9,6 @@ SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "DISCONNECT!"
-BLACKLIST = ['facebook.com', 'instagram.com']
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
@@ -22,9 +22,8 @@ def handle_client(conn, addr):
         if msg_length:
             msg_length = int(msg_length)
             msg = conn.recv(msg_length).decode(FORMAT)
-            print(f"[{addr}]: {msg}")
-            # conn.send(f"Message received: {msg}".encode(FORMAT)   
-            if msg in BLACKLIST:
+            print(f"[{addr}]: {msg}") 
+            if isBlack(msg):
                 conn.send(f'http://localhost:8000/blacklisted.html'.encode(FORMAT))
             elif msg == DISCONNECT_MESSAGE:
                 connected = False
