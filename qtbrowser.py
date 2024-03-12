@@ -125,8 +125,9 @@ class MainWindow(QMainWindow):
 
 		# getting url and converting it to QUrl object
 		q = QUrl(self.urlbar.text())
+		q = str(q.toString())
 		clientConn = clientEnd()
-		q = sendMsg(clientConn, q).decode(FORMAT)
+		q = QUrl(sendMsg(clientConn, q))
 
 		# set the url to the browser
 		self.browser.setUrl(q)
@@ -141,7 +142,7 @@ class MainWindow(QMainWindow):
 		# setting cursor position of the url bar
 		self.urlbar.setCursorPosition(0)
 
-	def handle_window_close(self):
+	def handle_window_closed(self):
 		sendMsg(client, DISCONNECT_MESSAGE)
 	
 
