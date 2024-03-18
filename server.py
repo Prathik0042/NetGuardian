@@ -2,6 +2,7 @@ import socket
 import threading
 from trial import checkHTTPOrS
 from isBlack import isBlack
+import ssl
 
 HEADER = 64
 PORT = 5050
@@ -9,6 +10,9 @@ SERVER = socket.gethostbyname(socket.gethostname())
 ADDR = (SERVER, PORT)
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "DISCONNECT!"
+
+context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+context.load_cert_chain('new.pem', 'private.key')
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(ADDR)
@@ -34,7 +38,6 @@ def handle_client(conn, addr):
 
     conn.close()
            
-
 def start():
     server.listen()
     print(f"[LISTENING] Server is listening on {SERVER}")

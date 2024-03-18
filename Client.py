@@ -1,4 +1,5 @@
 import socket
+import ssl
 
 HEADER = 64
 PORT = 5050
@@ -8,6 +9,9 @@ FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "DISCONNECT!"
 
 def clientEnd():
+    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+    context.load_cert_chain('new.pem')
+
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client.connect(ADDR)
     return client
