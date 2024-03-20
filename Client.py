@@ -9,23 +9,23 @@ FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "DISCONNECT!"
 
 def clientEnd():
-    context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-    context.load_cert_chain('new.pem')
+    # context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+
+    # # Load the self-signed certificate into the client's trust store (NOT RECOMMENDED FOR PRODUCTION)
+    # context.load_verify_locations(cafile="certificate.crt")
+
+    # context.load_cert_chain('new.pem', 'private.key')  # Your client certificate and key
 
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    # c_client = context.wrap_socket(client, server_hostname="localhost", do_handshake_on_connect=False,
+                                        # suppress_ragged_eofs=True)
     client.connect(ADDR)
     return client
 
 def sendMsg(client, msg):
     message = msg.encode(FORMAT)
-    msg_length = len(message)
-    send_length = str(msg_length).encode(FORMAT)
-    send_length += b' ' * (HEADER - len(send_length))
-    print('Sending length...', send_length)
-    client.send(send_length)
     print('Sending info...', message)
     client.send(message)
-    # print(client.recv(2048).decode(FORMAT))   # "Message received"
     serverMsg = client.recv(2048).decode(FORMAT)     # Validation message
     return serverMsg
 

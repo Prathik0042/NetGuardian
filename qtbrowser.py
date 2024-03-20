@@ -1,6 +1,6 @@
 # importing required libraries
 from PyQt5.QtCore import *
-from PyQt5.QtGui import QCloseEvent
+# from PyQt5.QtGui import QCloseEvent
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtWebEngineWidgets import *
@@ -105,9 +105,6 @@ class MainWindow(QMainWindow):
 		# showing all the components
 		self.show()
 
-		self.destroyed.connect(self.handle_window_closed)
-
-
 	# method for updating the title of the window
 	def update_title(self):
 		title = self.browser.page().title()
@@ -140,12 +137,7 @@ class MainWindow(QMainWindow):
 
 		# setting cursor position of the url bar
 		self.urlbar.setCursorPosition(0)
-
-	def handle_window_closed(self):
-		sendMsg(client, DISCONNECT_MESSAGE)
 	
-
-
 # creating a pyQt5 application
 app = QApplication(sys.argv)
 
