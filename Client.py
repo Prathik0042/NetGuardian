@@ -1,5 +1,4 @@
 import socket
-import ssl
 
 HEADER = 64
 PORT = 5050
@@ -9,16 +8,8 @@ FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "DISCONNECT!"
 
 def clientEnd():
-    # context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-
-    # # Load the self-signed certificate into the client's trust store (NOT RECOMMENDED FOR PRODUCTION)
-    # context.load_verify_locations(cafile="certificate.crt")
-
-    # context.load_cert_chain('new.pem', 'private.key')  # Your client certificate and key
 
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # c_client = context.wrap_socket(client, server_hostname="localhost", do_handshake_on_connect=False,
-                                        # suppress_ragged_eofs=True)
     client.connect(ADDR)
     return client
 
